@@ -1,0 +1,30 @@
+import Mutual.*
+import socios.*
+
+describe "Parte 4"{
+	const viajePlaya = new ViajePlaya(idiomas = #{"Español","Aleman","Ingles"}, largoPlaya = 1000)
+	const viajePlaya2 = new  ViajePlaya(idiomas = #{"Español","Aleman","Ingles"},largoPlaya = 2000)
+	const claseGimnasia = new ClaseDeGimnasia()
+	const roque = new  SocioTranquilo(actividades = [viajePlaya,viajePlaya2], maxActividades =2, edad = 21,idiomas = "Español")
+	const ana = new SocioCoherente(actividades = [viajePlaya,viajePlaya2,claseGimnasia], maxActividades = 3,edad = 30,idiomas = #{"Ingles"})
+	
+	test "Roque debe ser adorador del sol y Las actividades que implican esfuerzo debe ser la de viaje de playa 2" {
+	
+	assert.that(roque.esAdoradorDelSol())
+	assert.equals([viajePlaya2], roque.actividadesEsforzadas() )
+
+}
+
+	test"error"{
+		roque.agregarActividad(claseGimnasia)
+		assert.throwsExceptionWithMessage("Llegó al maximo de actividades",{roque.agregarActividad(claseGimnasia)})
+	}
+	
+	test "Ana puede realizar las 3 actividades y no es adoradora del sol"{
+
+
+		assert.that(not ana.esAdoradorDelSol())
+		assert.equals([viajePlaya2, claseGimnasia ], ana.actividadesEsforzadas() )
+	}
+}
+
